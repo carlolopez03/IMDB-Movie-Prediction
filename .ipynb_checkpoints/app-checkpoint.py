@@ -66,10 +66,44 @@ if st.button("Get prediction."):
 else: 
     st.empty()
 
-if st.button('Evaluate Model'):
-    train_report, test_report, eval_fig = fn.evaluate_classification(count_pipe, X_train, y_train, X_test, y_test)
-    st.text('Training Report')
-    st.text(train_report)
-    st.text('Test Report')
-    st.text(test_report)
-    st.pyplot(eval_fig)
+#if st.button('Evaluate Model'):
+    #train_report, test_report, eval_fig = fn.evaluate_classification(count_pipe, X_train, y_train, X_test, y_test)
+    #st.text('Training Report')
+    #st.text(train_report)
+    #st.text('Test Report')
+    #st.text(test_report)
+    #st.pyplot(eval_fig)
+
+
+show_train = st.checkbox("Show training data.",value=True)
+show_test = st.checkbox("Show test data.", value=True)
+
+if st.button("Show model evaluation."):
+    
+    if show_train == True:
+        # Display training data results
+        y_pred_train = count_pipe.predict(X_train)
+        report_str, conf_mat = fn.classification_metrics_streamlit(y_train, y_pred_train, label='Training Data')
+        st.text(report_str)
+        st.pyplot(conf_mat)
+        st.text("\n\n")
+    if show_test == True: 
+        # Display the trainin data resultsg
+        y_pred_test = count_pipe.predict(X_test)
+        report_str, conf_mat = fn.classification_metrics_streamlit(y_test, y_pred_test, cmap='Reds',label='Test Data')
+        st.text(report_str)
+        st.pyplot(conf_mat)
+        st.text("\n\n")
+        
+else:
+    st.empty()
+
+
+
+
+
+
+
+
+
+
